@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {LogLevel} from './log-level.enum';
+
+
 export class LogEntry {
   entryDate: Date = new Date();
   message: string = '';
