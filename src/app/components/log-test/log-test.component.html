@@ -1,3 +1,16 @@
 <button (click)="testLog()">Test Log</button>
 <button (click)="clearLog()">Clear Log</button>
 <button (click)="objectLog()">Object Log</button>
+
+<br>
+<button (click)="getLocalStorage()">Get Local Storage</button>
+
+<ul>
+  <li *ngFor="let entry of logEntries">
+<!--    <span>Entry Date:{{entry.entryDate}}</span>-->
+    <span>Entry Message : {{entry.message}}</span><br>
+<!--    <div *ngFor="let info  of entry.extraInfo ">-->
+<!--      <span>{{info | json}}</span>-->
+<!--    </div>-->
+  </li>
+</ul>

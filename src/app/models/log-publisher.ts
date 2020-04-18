@@ -52,5 +52,14 @@ export class LogLocalStorage extends LogPublisher {
     return of(true);
   }
 
+  getAll(): Observable<LogEntry[]> {
+    let values: LogEntry[];
+
+    // Get all values from LocalStorage
+    values = JSON.parse(localStorage.getItem(this.location)) || [];
+
+    return of(values);
+  }
+
 
 }
