@@ -1,9 +1,51 @@
 import {Injectable} from '@angular/core';
 import {LogLevel} from './log-level.enum';
+export class LogEntry {
+  entryDate: Date = new Date();
+  message: string = '';
+  level: LogLevel = LogLevel.Debug;
+  extraInfo: any[] = [];
 
+  logWithDate: boolean = true;
+
+  buildLogString(): string {
+    let result = '';
+    if (this.logWithDate) {
+      result = this.entryDate + '; ';
+    }
+    result += `Type: ${LogLevel[this.level]}; `;
+    result += `Message: ${this.message}; `;
+
+    if (this.extraInfo.length > 0) {
+      result += 'Extra info' + this.formatParams(this.extraInfo);
+    }
+    return result;
+  }
+
+  private formatParams(params: any[]): string {
+    let result: string = params.join(',');
+
+    if (params.some(param => typeof param === 'object')) {
+      result = '';
+      for (const item of params) {
+        result += JSON.stringify(item) + ',';
+      }
+    }
+
+    return result;
+
+  }
+
+
+}
 @Injectable({
   providedIn: 'root'
 })
+
+
+
+
+
 export class LogService {
   level: LogLevel = LogLevel.ALL;
   logWithDate: boolean = true;
@@ -45,35 +87,18 @@ export class LogService {
     this.writeToLog(message, LogLevel.ALL, optionalParams);
   }
 
-  private formatParams(params: any[]): string {
-    let result: string = params.join(',');
-
-    if (params.some(param => typeof param === 'object')) {
-      result = '';
-      for (const item of params) {
-        result += JSON.stringify(item) + ',';
-      }
-    }
-
-    return result;
-
-  }
 
   private writeToLog(message: string, level: LogLevel, params: any[]) {
     if (this.shouldLog(level)) {
-      let valueToLog: string = '';
-      //  Build Log string
 
-      if (this.logWithDate) {
-        valueToLog = new Date() + '-';
-      }
-      valueToLog += `Type: ${LogLevel[level]} `;
-      valueToLog += `Message: ${JSON.stringify(message)} `;
-      valueToLog += `Extra Info: ${this.formatParams(params)} `;
+      let entry: LogEntry = new LogEntry();
+      entry.message = message;
+      entry.level = level;
+      entry.extraInfo = params;
+      entry.logWithDate = this.logWithDate;
 
-      //  Log the value
+      console.log(entry.buildLogString());
 
-      console.log(valueToLog);
 
     }
   }
