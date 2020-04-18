@@ -5,6 +5,7 @@ export abstract class LogPublisher {
   location: string;
 
   abstract log(record: LogEntry): Observable<boolean>;
+
   abstract clear(): Observable<boolean>;
 }
 
@@ -21,4 +22,35 @@ export class LogConsole extends LogPublisher {
 
     return of(true);
   }
+}
+
+export class LogLocalStorage extends LogPublisher {
+
+  constructor() {
+    super();
+    this.location = 'logging';
+  }
+
+  log(record: LogEntry): Observable<boolean> {
+    const result: boolean = false;
+    let logEntries: LogEntry[];
+    try {
+      logEntries = JSON.parse(localStorage.getItem(this.location)) || [];
+      // Add new log entry to the array
+      logEntries.push(record);
+      //  Store logEntries in LocalStorage
+      localStorage.setItem(this.location, JSON.stringify(logEntries));
+    } catch (exception) {
+      console.log(exception);
+    }
+
+    return of(result);
+  }
+
+  clear(): Observable<boolean> {
+    localStorage.removeItem(this.location);
+    return of(true);
+  }
+
+
 }

@@ -20,4 +20,7 @@ export class LogTestComponent implements OnInit {
     this.logger.debug('Test the log() Method', 'This', 'Is', 'Optional', 'Params', 1, 3);
   }
 
+  clearLog() {
+    this.logger.clear();
+  }
 }

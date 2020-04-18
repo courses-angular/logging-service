@@ -92,6 +92,12 @@ export class LogService {
     this.writeToLog(message, LogLevel.ALL, optionalParams);
   }
 
+  clear() {
+    for (const logger of this.publishers) {
+      logger.clear();
+    }
+  }
+
 
   private writeToLog(message: string, level: LogLevel, params: any[]) {
     if (this.shouldLog(level)) {
