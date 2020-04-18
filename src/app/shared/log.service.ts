@@ -45,6 +45,20 @@ export class LogService {
     this.writeToLog(message, LogLevel.ALL, optionalParams);
   }
 
+  private formatParams(params: any[]): string {
+    let result: string = params.join(',');
+
+    if (params.some(param => typeof param === 'object')) {
+      result = '';
+      for (const item of params) {
+        result += JSON.stringify(item) + ',';
+      }
+    }
+
+    return result;
+
+  }
+
   private writeToLog(message: string, level: LogLevel, params: any[]) {
     if (this.shouldLog(level)) {
       let valueToLog: string = '';
@@ -55,6 +69,7 @@ export class LogService {
       }
       valueToLog += `Type: ${LogLevel[level]} `;
       valueToLog += `Message: ${JSON.stringify(message)} `;
+      valueToLog += `Extra Info: ${this.formatParams(params)} `;
 
       //  Log the value
 

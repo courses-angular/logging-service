@@ -17,7 +17,7 @@ export class LogTestComponent implements OnInit {
 
   testLog() {
     this.logger.level = LogLevel.Debug;
-    this.logger.debug('Test the log() Method');
+    this.logger.debug('Test the log() Method', 'This', 'Is', 'Optional', 'Params', 1, 3);
   }
 
 }
