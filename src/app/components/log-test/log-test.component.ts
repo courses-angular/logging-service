@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LogService} from '../../shared/log.service';
 import {LogLevel} from '../../shared/log-level.enum';
+import {Product} from './product';
 
 @Component({
   selector: 'yl-log-test',
@@ -22,5 +23,15 @@ export class LogTestComponent implements OnInit {
 
   clearLog() {
     this.logger.clear();
+  }
+
+  objectLog() {
+    const product = new Product();
+    product.productId = 1;
+    product.productName = 'Milk';
+    product.introductionDate = new Date();
+    product.price = 12;
+    product.url = 'www.milk.com';
+    this.logger.log('This is a product', product);
   }
 }
