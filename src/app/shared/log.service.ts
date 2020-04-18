@@ -21,7 +21,31 @@ export class LogService {
     return result;
   }
 
-  private writeToLog(message: string, level: LogLevel) {
+  debug(message: string, ...optionalParams: any[]) {
+    this.writeToLog(message, LogLevel.Debug, optionalParams);
+  }
+
+  info(message: string, ...optionalParams: any[]) {
+    this.writeToLog(message, LogLevel.Info, optionalParams);
+  }
+
+  warn(message: string, ...optionalParams: any[]) {
+    this.writeToLog(message, LogLevel.Warn, optionalParams);
+  }
+
+  error(message: string, ...optionalParams: any[]) {
+    this.writeToLog(message, LogLevel.Error, optionalParams);
+  }
+
+  fatal(message: string, ...optionalParams: any[]) {
+    this.writeToLog(message, LogLevel.Fatal, optionalParams);
+  }
+
+  log(message: any, ...optionalParams: any[]) {
+    this.writeToLog(message, LogLevel.ALL, optionalParams);
+  }
+
+  private writeToLog(message: string, level: LogLevel, params: any[]) {
     if (this.shouldLog(level)) {
       let valueToLog: string = '';
       //  Build Log string
@@ -39,7 +63,5 @@ export class LogService {
     }
   }
 
-  log(message: any) {
-    this.writeToLog(message, LogLevel.ALL);
-  }
+
 }
