@@ -10,7 +10,7 @@
     "isActive": true
   },
   {
-    "loggerName": "webAPI",
+    "loggerName": "webapi",
     "location": "http://localhost",
     "isActive": true
   }
