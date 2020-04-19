@@ -29,7 +29,7 @@ export class LogTestComponent implements OnInit {
 
   testLog() {
     this.logger.level = LogLevel.Debug;
-    this.logger.debug('Test the log() Method', 'This', 'Is', 'Optional', 'Params', 1, 3);
+    this.logger.error('Test the log() Method', 'This', 'Is', 'Optional', 'Params', 1, 3);
   }
 
   clearLog() {
@@ -43,6 +43,6 @@ export class LogTestComponent implements OnInit {
     product.introductionDate = new Date();
     product.price = 12;
     product.url = 'www.milk.com';
-    this.logger.log('This is a product', product);
+    this.logger.error('This is a product', product);
   }
 }

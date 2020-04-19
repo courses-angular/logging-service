@@ -1,5 +1,14 @@
 import {LogEntry} from '../shared/log.service';
-import {Observable, of} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
+import {HttpHeaders, HttpResponse, HttpClient, HttpRequest, HttpErrorResponse} from '@angular/common/http';
+import {map, catchError} from 'rxjs/operators';
+
+
+export class LogPublisherConfig {
+  loggerName: string;
+  loggerLocation: string;
+  isActive: boolean;
+}
 
 export abstract class LogPublisher {
   location: string;
@@ -62,4 +71,43 @@ export class LogLocalStorage extends LogPublisher {
   }
 
 
+}
+
+export class LogWebAPI extends LogPublisher {
+  constructor(private http: HttpClient) {
+    super();
+
+    this.location = 'http://localhost'; // Here must be an endpoint to the server
+  }
+
+  log(record: LogEntry): Observable<boolean> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post(this.location, record, {headers}).pipe(
+      map(response => response),
+      catchError(this.handleErrors)
+    );
+
+  }
+
+  clear(): Observable<boolean> {
+    // TODO: call WebAPI to clear all entries on the server
+
+    return of(true);
+  }
+
+  private handleErrors(error: HttpErrorResponse): Observable<any> {
+    const errors: string[] = [];
+    let message = '';
+    message = 'Status:' + error.status;
+    message = 'Status text:' + error.statusText;
+    if (error) {
+      message += '-Exception message' + error.message;
+    }
+    errors.push(message);
+    console.error('An error occurred', errors);
+
+    return throwError(errors);
+
+
+  }
 }

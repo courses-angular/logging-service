@@ -1,16 +1,19 @@
-<button (click)="testLog()">Test Log</button>
-<button (click)="clearLog()">Clear Log</button>
-<button (click)="objectLog()">Object Log</button>
+<div class="ml-5 justify-content-center w-100 d-flex">
+  <button (click)="testLog()" class="btn btn-outline-primary">Test Log</button>
+  <button (click)="clearLog()" class="btn btn-outline-success">Clear Log</button>
+  <button (click)="objectLog()" class="btn btn-outline-secondary">Object Log</button>
+  <button (click)="getLocalStorage()" class="btn btn-info">Get Local Storage</button>
+</div>
 
-<br>
-<button (click)="getLocalStorage()">Get Local Storage</button>
 
-<ul>
-  <li *ngFor="let entry of logEntries">
-<!--    <span>Entry Date:{{entry.entryDate}}</span>-->
-    <span>Entry Message : {{entry.message}}</span><br>
-<!--    <div *ngFor="let info  of entry.extraInfo ">-->
-<!--      <span>{{info | json}}</span>-->
-<!--    </div>-->
-  </li>
-</ul>
+<div class="container w-100 mt-5">
+  <ul class="list-group w-50">
+    <li *ngFor="let entry of logEntries" class="list-group-item">
+      <!--    <span>Entry Date:{{entry.entryDate}}</span>-->
+      <span>Entry Message : {{entry.message}}</span><br>
+      <!--    <div *ngFor="let info  of entry.extraInfo ">-->
+      <!--      <span>{{info | json}}</span>-->
+      <!--    </div>-->
+    </li>
+  </ul>
+</div>

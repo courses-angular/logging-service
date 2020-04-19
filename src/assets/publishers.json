@@ -1,0 +1,17 @@
+[
+  {
+    "loggerName": "console",
+    "location": "",
+    "isActive": true
+  },
+  {
+    "loggerName": "localStorage",
+    "location": "logging",
+    "isActive": true
+  },
+  {
+    "loggerName": "webAPI",
+    "location": "http://localhost",
+    "isActive": true
+  }
+]
